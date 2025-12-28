@@ -10,6 +10,33 @@ local preview = require("buffer-sticks.preview")
 
 local M = {}
 
+---Return true when captured input matches configured keycode
+---@param char number|string
+---@param char_str string
+---@param key string
+---@return boolean
+local function matches_key(char, char_str, key)
+	if type(key) ~= "string" or key == "" then
+		return false
+	end
+
+	-- expand key param to internal representation
+	local termcode = vim.api.nvim_replace_termcodes(key, true, false, true)
+
+	if type(char_str) == "string" and char_str == termcode then
+		return true
+	end
+
+	if type(char) == "number" then
+		local ok, tc_nr = pcall(vim.fn.char2nr, termcode)
+		if ok and tc_nr == char then
+			return true
+		end
+	end
+
+	return false
+end
+
 ---Helper to update display with window resize and redraw
 local function update_display()
 	window.create_or_update()
@@ -39,12 +66,8 @@ end
 local function handle_filter_input(char, char_str, handle_input)
 	local filter_keys = config.list and config.list.filter and config.list.filter.keys or {}
 
-	-- Up arrow
-	if
-		filter_keys.move_up == "<Up>"
-		and type(char_str) == "string"
-		and (char_str == "\x1b[A" or char_str == "<80>ku" or char_str:match("ku$"))
-	then
+	-- Move up in filtered list
+	if matches_key(char, char_str, filter_keys.move_up) then
 		local buffers = buffers_mod.get_buffer_list()
 		local display_paths = buffers_mod.get_display_paths(buffers)
 		local filtered_indices = render.apply_fuzzy_filter(buffers, display_paths)
@@ -65,12 +88,8 @@ local function handle_filter_input(char, char_str, handle_input)
 		return true
 	end
 
-	-- Down arrow
-	if
-		filter_keys.move_down == "<Down>"
-		and type(char_str) == "string"
-		and (char_str == "\x1b[B" or char_str == "<80>kd" or char_str:match("kd$"))
-	then
+	-- Move down in filtered list
+	if matches_key(char, char_str, filter_keys.move_down) then
 		local buffers = buffers_mod.get_buffer_list()
 		local display_paths = buffers_mod.get_display_paths(buffers)
 		local filtered_indices = render.apply_fuzzy_filter(buffers, display_paths)
@@ -92,7 +111,7 @@ local function handle_filter_input(char, char_str, handle_input)
 	end
 
 	-- Enter/confirm
-	if filter_keys.confirm == "<CR>" and (char == 13 or char == 10) then
+	if matches_key(char, char_str, filter_keys.confirm) then
 		local buffers = buffers_mod.get_buffer_list()
 		local display_paths = buffers_mod.get_display_paths(buffers)
 		local filtered_indices = render.apply_fuzzy_filter(buffers, display_paths)
@@ -230,12 +249,8 @@ function M.enter(opts, show_fn)
 		-- Arrow keys in list mode
 		local list_keys = config.list and config.list.keys or {}
 
-		-- Up arrow
-		if
-			list_keys.move_up == "<Up>"
-			and type(char_str) == "string"
-			and (char_str == "\x1b[A" or char_str == "<80>ku" or char_str:match("ku$"))
-		then
+		-- Move up in list
+		if matches_key(char, char_str, list_keys.move_up) then
 			local buf_list = buffers_mod.get_buffer_list()
 			if #buf_list > 0 then
 				if state.list_mode_selected_index == nil then
@@ -260,12 +275,8 @@ function M.enter(opts, show_fn)
 			return
 		end
 
-		-- Down arrow
-		if
-			list_keys.move_down == "<Down>"
-			and type(char_str) == "string"
-			and (char_str == "\x1b[B" or char_str == "<80>kd" or char_str:match("kd$"))
-		then
+		-- Move down in list
+		if matches_key(char, char_str, list_keys.move_down) then
 			local buf_list = buffers_mod.get_buffer_list()
 			if #buf_list > 0 then
 				if state.list_mode_selected_index == nil then
@@ -313,7 +324,7 @@ function M.enter(opts, show_fn)
 
 		-- Enter filter mode
 		local filter_keys = config.list and config.list.filter and config.list.filter.keys or {}
-		if filter_keys.enter == "/" and type(char_str) == "string" and char_str == "/" then
+		if matches_key(char, char_str, filter_keys.enter) then
 			state.filter_mode = true
 			state.filter_input = ""
 			state.filter_selected_index = 1
@@ -324,7 +335,7 @@ function M.enter(opts, show_fn)
 
 		-- Close buffer key (ctrl-q)
 		local close_key = list_keys.close_buffer or "<C-q>"
-		if close_key == "<C-q>" and char == 17 then
+		if matches_key(char, char_str, close_key) then
 			local cur_buf = vim.api.nvim_get_current_buf()
 			vim.api.nvim_buf_delete(cur_buf, { force = false })
 			leave(false)
