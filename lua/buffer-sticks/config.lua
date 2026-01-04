@@ -17,11 +17,13 @@
 ---@field close_buffer string Key combination to close buffer in list mode
 ---@field move_up string Key to move selection up in list mode
 ---@field move_down string Key to move selection down in list mode
+---@field confirm string Key to confirm selection in list mode
 
 ---@class BufferSticksFilterKeys
 ---@field enter string Key to enter filter mode
 ---@field confirm string Key to confirm selection in filter mode
 ---@field exit string Key to exit filter mode
+---@field backspace string Key to delete character in filter mode
 ---@field move_up string Key to move selection up in filter mode
 ---@field move_down string Key to move selection down in filter mode
 
@@ -100,6 +102,7 @@ local M = {
 			close_buffer = "<C-q>",
 			move_up = "<Up>",
 			move_down = "<Down>",
+			confirm = "<CR>",
 		},
 		filter = {
 			title = "➜ ",
@@ -110,6 +113,7 @@ local M = {
 				enter = "/",
 				confirm = "<CR>",
 				exit = "<Esc>",
+				backspace = "<BS>",
 				move_up = "<Up>",
 				move_down = "<Down>",
 			},
