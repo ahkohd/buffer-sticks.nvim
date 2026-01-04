@@ -136,7 +136,8 @@ local function handle_filter_input(char, char_str, handle_input)
 	end
 
 	-- Backspace
-	if char == 127 or char == 8 or char_str == "<80>kb" or char_str:match("kb$") then
+	local backspace_key = filter_keys.backspace or "<BS>"
+	if matches_key(char, char_str, backspace_key) then
 		if #state.filter_input > 0 then
 			state.filter_input = state.filter_input:sub(1, -2)
 			state.filter_selected_index = 1
@@ -227,7 +228,8 @@ function M.enter(opts, show_fn)
 		end
 
 		-- Escape or ctrl-c
-		if char == 27 or (type(char_str) == "string" and (char_str == "\x03" or char_str == "\27")) then
+		local exit_key = config.list and config.list.filter and config.list.filter.keys and config.list.filter.keys.exit or "<Esc>"
+		if matches_key(char, char_str, exit_key) or matches_key(char, char_str, "<C-c>") then
 			if state.filter_mode then
 				state.filter_mode = false
 				state.filter_input = ""
@@ -301,7 +303,8 @@ function M.enter(opts, show_fn)
 		end
 
 		-- Enter to confirm selection
-		if (char == 13 or char == 10) and state.list_mode_selected_index ~= nil then
+		local confirm_key = list_keys.confirm or "<CR>"
+		if matches_key(char, char_str, confirm_key) and state.list_mode_selected_index ~= nil then
 			local buf_list = buffers_mod.get_buffer_list()
 			if state.list_mode_selected_index > 0 and state.list_mode_selected_index <= #buf_list then
 				local selected_buffer = buf_list[state.list_mode_selected_index]
