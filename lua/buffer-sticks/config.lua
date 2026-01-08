@@ -72,6 +72,7 @@
 ---@field alternate_modified_char string Character to display for the alternate modified buffer
 ---@field active_modified_char string Character to display for the active modified buffer
 ---@field inactive_modified_char string Character to display for inactive modified buffers
+---@field position? "right"|"center" Window position (default: "right")
 ---@field transparent boolean Whether the background should be transparent
 ---@field winblend? number Window blend level (0-100)
 ---@field auto_hide boolean Auto-hide when cursor is over float
@@ -92,6 +93,7 @@ local M = {
 	active_modified_char = "──",
 	inactive_modified_char = " ─",
 	alternate_modified_char = " ─",
+	position = "right",
 	transparent = true,
 	auto_hide = true,
 	label = { show = "list" },
