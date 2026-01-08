@@ -54,6 +54,11 @@ local function leave(restore_original)
 	state.filter_input = ""
 	state.filter_selected_index = 1
 	preview.cleanup(restore_original)
+	if not config.show_indicators then
+		state.visible = false
+		window.close_all()
+		return
+	end
 	window.create_or_update()
 	render.render()
 end
