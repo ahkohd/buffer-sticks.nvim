@@ -66,6 +66,7 @@
 ---@class BufferSticksConfig
 ---@field offset BufferSticksOffset Position offset for fine-tuning
 ---@field padding BufferSticksPadding Padding inside the window
+---@field border? string Border style (default: "none")
 ---@field active_char string Character to display for the active buffer
 ---@field inactive_char string Character to display for inactive buffers
 ---@field alternate_char string Character to display for the alternate buffer
@@ -86,6 +87,7 @@
 local M = {
 	offset = { x = 0, y = 0 },
 	padding = { top = 0, right = 1, bottom = 0, left = 1 },
+	border = "none",
 	active_char = "──",
 	inactive_char = " ─",
 	alternate_char = " ─",
