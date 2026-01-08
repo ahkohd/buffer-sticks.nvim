@@ -159,7 +159,7 @@ function M.create_or_update()
 		col = col,
 		row = row,
 		style = "minimal",
-		border = "none",
+		border = config.border or "none",
 		focusable = false,
 		zindex = 10,
 	}
