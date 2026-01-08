@@ -64,6 +64,7 @@
 ---@field float? BufferSticksPreviewFloat Float window configuration
 
 ---@class BufferSticksConfig
+---@field show_indicators boolean show indicators unless explicitly disabled
 ---@field offset BufferSticksOffset Position offset for fine-tuning
 ---@field padding BufferSticksPadding Padding inside the window
 ---@field active_char string Character to display for the active buffer
@@ -85,6 +86,7 @@
 
 ---@type BufferSticksConfig
 local M = {
+	show_indicators = true,
 	offset = { x = 0, y = 0 },
 	padding = { top = 0, right = 1, bottom = 0, left = 1 },
 	active_char = "──",
