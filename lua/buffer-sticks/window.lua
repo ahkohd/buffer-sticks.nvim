@@ -136,8 +136,15 @@ function M.create_or_update()
 	local height = content_height + config.padding.top + config.padding.bottom
 	local width = content_width + config.padding.left + config.padding.right
 
-	local col = vim.o.columns - width - config.offset.x
+	local position = config.position or "right"
 	local row = math.floor((vim.o.lines - height) / 2) + config.offset.y
+	local col
+
+	if position == "center" then
+		col = math.floor((vim.o.columns - width) / 2) + config.offset.x
+	else
+		col = vim.o.columns - width - config.offset.x
+	end
 
 	if not vim.api.nvim_buf_is_valid(state.buf) then
 		state.buf = vim.api.nvim_create_buf(false, true)
