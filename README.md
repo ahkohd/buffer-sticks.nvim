@@ -111,6 +111,7 @@ return {
 require("buffer-sticks").setup({
   offset = { x = 0, y = 0 },    -- Position offset (positive moves inward from right edge)
   padding = { top = 0, right = 1, bottom = 0, left = 1 }, -- Padding inside the float
+  border = "none",             -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
   active_char = "──",           -- Character for active buffer
   inactive_char = " ─",         -- Character for inactive buffers
   alternate_char = " ─",        -- Character for alternate buffer
