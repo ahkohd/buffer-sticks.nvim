@@ -136,8 +136,15 @@ function M.create_or_update()
 	local height = content_height + config.padding.top + config.padding.bottom
 	local width = content_width + config.padding.left + config.padding.right
 
-	local col = vim.o.columns - width - config.offset.x
+	local position = state.list_mode and (config.position or "right") or "right"
 	local row = math.floor((vim.o.lines - height) / 2) + config.offset.y
+	local col
+
+	if position == "center" then
+		col = math.floor((vim.o.columns - width) / 2) + config.offset.x
+	else
+		col = vim.o.columns - width - config.offset.x
+	end
 
 	if not vim.api.nvim_buf_is_valid(state.buf) then
 		state.buf = vim.api.nvim_create_buf(false, true)
@@ -145,6 +152,7 @@ function M.create_or_update()
 		vim.bo[state.buf].filetype = "buffersticks"
 	end
 
+	local border = state.list_mode and (config.border or "none") or "none"
 	local win_config = {
 		relative = "editor",
 		width = width,
@@ -152,7 +160,7 @@ function M.create_or_update()
 		col = col,
 		row = row,
 		style = "minimal",
-		border = "none",
+		border = border,
 		focusable = false,
 		zindex = 10,
 	}

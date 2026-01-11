@@ -46,6 +46,10 @@ end
 
 ---Show the buffer sticks floating window
 function M.show()
+	if not config.show_indicators and not state.list_mode then
+		state.visible = false
+		return
+	end
 	vim.schedule(function()
 		if not state.visible then
 			return
