@@ -64,7 +64,6 @@
 ---@field float? BufferSticksPreviewFloat Float window configuration
 
 ---@class BufferSticksConfig
----@field show_by_default boolean show buffer-sticks by default (No need to called BufferSticks.show())
 ---@field show_indicators boolean show indicators unless explicitly disabled
 ---@field offset BufferSticksOffset Position offset for fine-tuning
 ---@field padding BufferSticksPadding Padding inside the window
@@ -88,7 +87,6 @@
 
 ---@type BufferSticksConfig
 local M = {
-  show_by_default = true,
 	show_indicators = true,
 	offset = { x = 0, y = 0 },
 	padding = { top = 0, right = 1, bottom = 0, left = 1 },
