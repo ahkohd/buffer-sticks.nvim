@@ -71,6 +71,10 @@ function M.create_float(buffer_id)
 	else
 		state.preview_float_win = vim.api.nvim_open_win(buffer_id, false, win_config)
 	end
+
+   if state.preview_float_win and vim.api.nvim_win_is_valid(state.preview_float_win) then
+     vim.wo[state.preview_float_win].signcolumn = "no"
+   end
 end
 
 ---Clean up preview resources
