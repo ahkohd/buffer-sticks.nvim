@@ -116,6 +116,8 @@ function M.setup(opts)
 				state.last_selected_buffer_id = nil
 			end
 
+      state.visible = config.show_by_default;
+
 			if state.visible then
 				M.show()
 			end
