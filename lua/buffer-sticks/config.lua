@@ -55,7 +55,7 @@
 ---@field border? string Border style (default: "single")
 ---@field title? string|boolean Title: nil/true = filename, false = none, string = custom
 ---@field title_pos? "left"|"center"|"right" Title position (default: "center")
----@field footer? string Footer text (default: nil)
+---@field footer? string|"filename" Footer: "filename" = filename, string = custom
 ---@field footer_pos? "left"|"center"|"right" Footer position (default: "center")
 
 ---@class BufferSticksPreview
