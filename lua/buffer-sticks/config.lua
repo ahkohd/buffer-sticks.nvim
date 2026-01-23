@@ -64,14 +64,17 @@
 ---@field float? BufferSticksPreviewFloat Float window configuration
 
 ---@class BufferSticksConfig
+---@field show_indicators boolean show indicators unless explicitly disabled
 ---@field offset BufferSticksOffset Position offset for fine-tuning
 ---@field padding BufferSticksPadding Padding inside the window
+---@field border? string Border style (default: "none")
 ---@field active_char string Character to display for the active buffer
 ---@field inactive_char string Character to display for inactive buffers
 ---@field alternate_char string Character to display for the alternate buffer
 ---@field alternate_modified_char string Character to display for the alternate modified buffer
 ---@field active_modified_char string Character to display for the active modified buffer
 ---@field inactive_modified_char string Character to display for inactive modified buffers
+---@field position? "right"|"center" List window position (default: "right")
 ---@field transparent boolean Whether the background should be transparent
 ---@field winblend? number Window blend level (0-100)
 ---@field auto_hide boolean Auto-hide when cursor is over float
@@ -84,14 +87,17 @@
 
 ---@type BufferSticksConfig
 local M = {
+	show_indicators = true,
 	offset = { x = 0, y = 0 },
 	padding = { top = 0, right = 1, bottom = 0, left = 1 },
+	border = "none",
 	active_char = "──",
 	inactive_char = " ─",
 	alternate_char = " ─",
 	active_modified_char = "──",
 	inactive_modified_char = " ─",
 	alternate_modified_char = " ─",
+	position = "right",
 	transparent = true,
 	auto_hide = true,
 	label = { show = "list" },
