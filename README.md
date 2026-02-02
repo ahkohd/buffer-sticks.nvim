@@ -109,6 +109,7 @@ return {
 
 ```lua
 require("buffer-sticks").setup({
+  show_by_default = true,       -- Whether to show buffer-sticks by default i.e automatically calls `BufferSticks.show()`
   show_indicators = true,       -- Whether to show stick indicators
   offset = { x = 0, y = 0 },    -- Position offset (positive moves inward from right edge)
   position = "right",           -- List window position: "right" or "center"
