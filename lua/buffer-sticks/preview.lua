@@ -61,7 +61,12 @@ function M.create_float(buffer_id)
 	end
 
 	if preview_config.footer then
-		win_config.footer = preview_config.footer
+		local title_text = preview_config.footer
+		if preview_config.footer == "filename" then
+			local buf_name = vim.api.nvim_buf_get_name(buffer_id)
+			title_text = buf_name ~= "" and vim.fn.fnamemodify(buf_name, ":t") or "[No Name]"
+		end
+		win_config.footer = " " .. title_text .. " "
 		win_config.footer_pos = preview_config.footer_pos or "center"
 	end
 
