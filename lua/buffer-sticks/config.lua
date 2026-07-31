@@ -35,7 +35,8 @@
 ---@field keys BufferSticksFilterKeys Key mappings for filter mode
 
 ---@class BufferSticksList
----@field show string[] What to show in list mode: "filename", "space", "label", "stick"
+---@field show string[] What to show in list mode: "filename", "label", "stick"
+---@field separator string Separator between columns (default: " ")
 ---@field active_indicator string Symbol to show for the selected item when using arrow navigation
 ---@field keys BufferSticksListKeys Key mappings for list mode
 ---@field filter BufferSticksListFilter Filter configuration
@@ -104,7 +105,17 @@ local M = {
 	auto_hide = true,
 	label = { show = "list" },
 	list = {
-		show = { "filename", "space", "label" },
+		show = { "filename", "label" },
+		separator = " ",
+		sort = {
+			field = "id", -- Sort by "id", "filename" or "label"
+			ascending = true, -- Sort order (true for ascending, false for descending)
+		},
+		align = {
+			filename = "right",
+			label = "right",
+			stick = "right",
+		},
 		active_indicator = "•",
 		keys = {
 			close_buffer = "<C-q>",

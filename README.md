@@ -7,8 +7,8 @@ Elegant buffer indicator and picker.
 [![Neovim](https://img.shields.io/badge/Neovim%200.10+-green.svg?style=for-the-badge&logo=neovim)](https://neovim.io)
 [![Lua](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.lua.org)
 
-
 <!-- Demo source: https://github.com/user-attachments/assets/8f2b4abe-07c1-4d52-9a58-ea1fa4c13bb1 -->
+
 https://github.com/user-attachments/assets/8f2b4abe-07c1-4d52-9a58-ea1fa4c13bb1
 
 </div>
@@ -125,7 +125,17 @@ require("buffer-sticks").setup({
   auto_hide = true,                -- Auto-hide when cursor is over float (default: true)
   label = { show = "list" },       -- Label display: "always", "list", or "never"
   list = {
-    show = { "filename", "space", "label" }, -- List mode display options
+    show = { "filename", "label" }, -- List mode display options and order
+		separator = " ",              -- Separator between components in list mode
+    sort = {
+      field = "id",               -- Sort by "id", "filename" or "label"
+      ascending = true,           -- Sort order (true for ascending, false for descending)
+    },
+    align = {
+      filename = "right",          -- Alignment for filename component
+      label = "right",             -- Alignment for label component
+      stick = "right",               -- Alignment for stick component
+    },
     active_indicator = "•",       -- Symbol for selected item in list mode (arrow navigation)
     keys = {
       close_buffer = "<C-q>",      -- Key to close buffer in list mode
@@ -223,6 +233,7 @@ BufferSticks.list({
 List mode allows you to quickly navigate to or close buffers by typing their first character(s):
 
 **Navigate to buffers:**
+
 1. Call `BufferSticks.list({ action = "open" })` or `BufferSticks.jump()`
 2. Selection starts at the currently active buffer
 3. Use `Up`/`Down` arrows (configurable) to navigate through buffers
@@ -233,6 +244,7 @@ List mode allows you to quickly navigate to or close buffers by typing their fir
 8. Press `Esc` or `Ctrl-C` to cancel
 
 **Close buffers:**
+
 1. Call `BufferSticks.list({ action = "close" })` or `BufferSticks.close()`
 2. Selection starts at the currently active buffer
 3. Use `Up`/`Down` arrows (configurable) to navigate through buffers
@@ -253,6 +265,7 @@ Filter buffers using fuzzy matching:
 5. Press `Esc` to exit filter mode back to list mode (previous selection is restored)
 
 **Custom action function (buffer picker):**
+
 1. Call `BufferSticks.list({ action = function(buffer, leave) ... end })`
 2. Selection starts at the currently active buffer
 3. Use `Up`/`Down` arrows or type the first character to select a buffer
@@ -263,14 +276,17 @@ Filter buffers using fuzzy matching:
 6. You control when to exit by calling `leave()`
 
 **Label Display Options:**
+
 - `label = { show = "always" }` - Always show buffer name labels
 - `label = { show = "list" }` - Only show labels when in list mode (default)
 - `label = { show = "never" }` - Never show labels
 
 **List Mode Display Options:**
+
 - **Default**: `list = { show = { "filename", "space", "label" } }`
 
 **Available elements:**
+
 - `"filename"` - Full filename
 - `"space"` - Spaces between elements
 - `"label"` - Unique character
@@ -317,6 +333,7 @@ preview = {
 ```
 
 **Title options:**
+
 - `title = nil` or `title = true` - Shows the buffer filename (default behavior)
 - `title = false` - No title displayed
 - `title = " Custom "` - Shows custom text
